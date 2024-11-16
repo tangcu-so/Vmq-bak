@@ -290,7 +290,14 @@ public class WebService {
             url = settingDao.findById("returnUrl").get().getVvalue();
         }
 
-        return ResUtil.success(url+"?"+p);
+        // 判断 URL 是否已经包含 ?
+        if (url.contains("?")) {
+            url = url + "&" + p; // 如果有 ?，使用 & 拼接
+        } else {
+            url = url + "?" + p; // 如果没有 ?，使用 ? 拼接
+        }
+
+    return ResUtil.success(url);
     }
 
     public CommonRes getState(String t,String sign){
